@@ -1,4 +1,4 @@
-# UnityConsoleAsset
+# Unity Developer Console
 Preparing a console for Unity for any project with basic capabilities.
 
 Hi, I'm Marc Baqués Sàbat a game development student in ENTI, Barcelona.
