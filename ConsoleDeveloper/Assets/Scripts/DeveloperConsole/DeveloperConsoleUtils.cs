@@ -1,19 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
-public static class DeveloperConsoleUtils
+namespace Console
 {
-    public static bool noValidArguments(string[] args)
+    public static class DeveloperConsoleUtils
     {
-        if (args == null || !(args.Length > 0)) return true;
-        if (args[0] == null || args[0] == "") return true;
-        return false;
-    }
+        public static bool noValidArguments(string[] args)
+        {
+            if (args == null || !(args.Length > 0)) return true;
+            if (args[0] == null || args[0] == "") return true;
+            return false;
+        }
 
-    public static bool isInputInvalid(string[] _input)
-    {
-        return (_input.Length == 0 || _input == null );
-    }
+        public static bool isInputInvalid(string[] _input)
+        {
+            return (_input.Length == 0 || _input == null);
+        }
 
+        public static bool IsEventSystemOnScene()
+        {
+            return (Object.FindObjectOfType<EventSystem>() != null);
+        }
+
+        public static void CreateEventSystem()
+        {
+            Debug.LogWarning(DeveloperConsoleMessages.MissingAndCreateEventSystemMessage);
+            GameObject go = new GameObject();
+            go.name = "EventSystem";
+            go.AddComponent<EventSystem>();
+            go.AddComponent<StandaloneInputModule>();
+        }
+    }
 }
+

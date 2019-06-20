@@ -29,8 +29,8 @@ namespace Console
         //Logic of the command
         public override void RunCommand(string[] args)
         {
-            DeveloperConsole.Instance.consoleInput.text = DeveloperConsoleMessages.DefaultConsoleInputMessage;
-            DeveloperConsole.Instance.consoleText.text = DeveloperConsoleMessages.DefaultConsoleTextMessage + "\n";
+            DeveloperConsole.Instance.getInputField().text = DeveloperConsoleMessages.DefaultConsoleInputMessage;
+            DeveloperConsole.Instance.getInputText().text = DeveloperConsoleMessages.DefaultConsoleTextMessage + "\n";
         }
 
         public static CommandClearConsole CreateCommand()

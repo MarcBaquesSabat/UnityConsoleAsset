@@ -17,7 +17,7 @@ namespace Console
 
         public CommandLoadScene()
         {
-            Name = "LoadSceneAdditive";
+            Name = "LoadScene";
             Command = "loadscene";
             Description = "Load the scene if it's on the build in additive mode.";
             Help = "Use this commands followed to the scene name to load it in additive mode.";

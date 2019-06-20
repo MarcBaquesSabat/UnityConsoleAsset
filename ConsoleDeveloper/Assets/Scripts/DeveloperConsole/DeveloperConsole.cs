@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 namespace Console
 {
@@ -15,11 +14,14 @@ namespace Console
         public static Dictionary<string, ConsoleCommand> Commands { get; private set; }
 
         [Header("UI Components")]
-        public Canvas consoleCanvas;
-        public ScrollRect scrollRect;
-        public TMPro.TextMeshProUGUI consoleText;
-        public Text inputText;
-        public InputField consoleInput;
+        [SerializeField]
+        private Canvas consoleCanvas = null;
+        [SerializeField]
+        private TMPro.TextMeshProUGUI consoleText = null;
+        [SerializeField]
+        private Text inputText = null;
+        [SerializeField]
+        private InputField consoleInput = null;
 
         [SerializeField]
         private int maxCommandsListSize = 20;
@@ -56,9 +58,9 @@ namespace Console
             consoleText.text += "\n";
             consoleCanvas.gameObject.SetActive(false);
 
-            if (!IsEventSystemOnScene())
+            if (!DeveloperConsoleUtils.IsEventSystemOnScene())
             {
-                CreateEventSystem();
+                DeveloperConsoleUtils.CreateEventSystem();
             }
 
             CreateCommands();
@@ -175,7 +177,7 @@ namespace Console
         //Modify this function adding all your own created commands
         private void CreateCommands()
         {
-            //Created commands
+            //User commands
             
             //Unity functionality commands
             CommandLoadScene.CreateCommand();
@@ -210,20 +212,15 @@ namespace Console
             AddMessageToConsole(_message);
         }
 
-        private bool IsEventSystemOnScene()
+        //Getters and setters
+        public TMPro.TextMeshProUGUI getInputText()
         {
-             return (FindObjectOfType<EventSystem>() != null);
+            return consoleText;
         }
 
-        private void CreateEventSystem()
+        public InputField getInputField()
         {
-            Debug.LogWarning(DeveloperConsoleMessages.MissingAndCreateEventSystemMessage);
-            GameObject go = new GameObject();
-            go.name = "EventSystem";
-            go.AddComponent<EventSystem>();
-            go.AddComponent<StandaloneInputModule>();
+            return consoleInput;
         }
-
-        
     }
 }
