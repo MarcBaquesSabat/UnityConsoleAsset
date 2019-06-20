@@ -179,8 +179,10 @@ namespace Console
         {
             //User commands
             
+
             //Unity functionality commands
             CommandLoadScene.CreateCommand();
+            CommandTimeScale.CreateCommand();
 
             //Basic commands
             CommandHelp.CreateCommand();
@@ -209,6 +211,7 @@ namespace Console
         private void HandleLog(string logMessage, string stackTrace, LogType type)
         {
             string _message = "[" + type.ToString() + "] " + logMessage;
+            
             AddMessageToConsole(_message);
         }
 

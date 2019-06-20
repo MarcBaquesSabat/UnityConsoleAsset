@@ -19,8 +19,8 @@ namespace Console
         {
             Name = "LoadScene";
             Command = "loadscene";
-            Description = "Load the scene if it's on the build in additive mode.";
-            Help = "Use this commands followed to the scene name to load it in additive mode.";
+            Description = "Load the scene if it's on the build.";
+            Help = "Use this commands like \"LoadScene <sceneName> <(LoadModeType)>\".";
 
             AddCommandToConsole();
         }
@@ -33,8 +33,8 @@ namespace Console
                 Debug.LogWarning(DeveloperConsoleMessages.NotFoundSceneMessage);
                 return;
             }
-
-            SceneManager.LoadScene(args[0], LoadSceneMode.Additive);
+            
+            SceneManager.LoadScene(args[0]);
         }
 
         public static CommandLoadScene CreateCommand()

@@ -18,9 +18,9 @@ namespace Console
         public CommandDescriptionCommand()
         {
             Name = "Description";
-            Command = "description";
+            Command = "desc";
             Description = "Displays the description of a command.";
-            Help = "Use this commands followed by the command to display it's description.";
+            Help = "Usage: \"help <(command)>\".";
 
             AddCommandToConsole();
         }
