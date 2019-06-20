@@ -44,6 +44,7 @@ namespace Console
             }
         }
 
+        //Clamp position on window to avoid canvas leaving the window
         private Vector2 ClampToWindow(PointerEventData data)
         {
             Vector2 rawPointerPosition = data.position;
