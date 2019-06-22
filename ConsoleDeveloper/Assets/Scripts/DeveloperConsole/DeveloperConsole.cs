@@ -117,6 +117,27 @@ namespace Console
             }
         }
 
+        /// <summary>
+        /// Add a message to console with a specific tag.
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="tag">Tag of the message</param>
+        public void AddTagedMessageToConsole(string msg, MessageTag tag = MessageTag.LOG)
+        {
+            string _message = "[" + tag.ToString() + "] " + msg + "\n";
+
+            consoleText.text += _message;
+        }
+
+        /// <summary>
+        /// Add a message to console.
+        /// </summary>
+        /// <param name="msg">Message</param>
+        public void AddMessageToConsole(string msg)
+        {
+            consoleText.text += (msg + "\n");
+        }
+
         //Add the command to the dictionary from the consoleCommand
         public static void AddCommadsToConsole(string _name, ConsoleCommand _command)
         {
@@ -153,18 +174,13 @@ namespace Console
             //Command doesnt exist on dictionary
             if (DeveloperConsoleUtils.isInputInvalid(_input) || !Commands.ContainsKey(_input[0]))
             {
-                Debug.LogWarning(DeveloperConsoleMessages.UnrecognizedCommandMessage);
+                AddTagedMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage, MessageTag.WARNING);
             }
             else
             {
                 IEnumerable<string> args = _input.Skip(1).Take(_input.Length - 1);
                 Commands[_input[0]].RunCommand(args.ToArray());
             }
-        }
-
-        public void AddMessageToConsole(string msg)
-        {
-            consoleText.text += msg + "\n";
         }
 
         //Parse the input by spaces with the first word non case sensitive
@@ -186,7 +202,7 @@ namespace Console
             //Unity functionality commands
             CommandLoadScene.CreateCommand();
             CommandTimeScale.CreateCommand();
-            CommandGameObjectActiveDisactive.CreateCommand();
+            CommandDisactiveGameObject.CreateCommand();
 
             //Basic commands
             CommandHelp.CreateCommand();
@@ -214,9 +230,7 @@ namespace Console
         //Handles Debug. message of Unity
         private void HandleLog(string logMessage, string stackTrace, LogType type)
         {
-            string _message = "[" + type.ToString() + "] " + logMessage;
-            
-            AddMessageToConsole(_message);
+            AddTagedMessageToConsole(logMessage, DeveloperConsoleUtils.LogTypeToMessageType(type));
         }
 
         //Getters and setters

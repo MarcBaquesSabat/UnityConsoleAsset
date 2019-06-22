@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Console
 {
-    public class CommandGameObjectActiveDisactive : ConsoleCommand
+    public class CommandDisactiveGameObject : ConsoleCommand
     {
         //Name of the command
         public override string Name { get; protected set; }
@@ -15,11 +15,11 @@ namespace Console
 
         public override string Help { get; protected set; }
 
-        public CommandGameObjectActiveDisactive()
+        public CommandDisactiveGameObject()
         {
-            Name = "GameObject setActive";
-            Command = "gameobject";
-            Description = "Change the state of the serached object. It can be search by Tag/Name.";
+            Name = "Disactive";
+            Command = "disactive";
+            Description = "Disactive the serached object. It can be search by Tag/Name.";
             Help = "Usage: \"GameObject <search by> <object>\"";
 
             AddCommandToConsole();
@@ -41,18 +41,17 @@ namespace Console
 
             if (go != null)
             {
-                go.SetActive(!go.activeInHierarchy);
-                string objectState = (go.activeInHierarchy) ? "activated": "disactivated";
-                DeveloperConsole.Instance.AddMessageToConsole("The object " + args[1] + " has been " + objectState);
+                go.SetActive(false);
+                DeveloperConsole.Instance.AddTagedMessageToConsole("The object " + args[1] + " has been disactivated.");
                 return;
             }
 
-            DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.GameObjectNotFoundMessage + args[1]);
+            DeveloperConsole.Instance.AddTagedMessageToConsole(DeveloperConsoleMessages.GameObjectNotFoundMessage + args[1], MessageTag.WARNING);
         }
 
-        public static CommandGameObjectActiveDisactive CreateCommand()
+        public static CommandDisactiveGameObject CreateCommand()
         {
-            return new CommandGameObjectActiveDisactive();
+            return new CommandDisactiveGameObject();
         }
     }
 }

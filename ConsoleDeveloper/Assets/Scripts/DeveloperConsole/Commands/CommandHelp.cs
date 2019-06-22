@@ -34,18 +34,18 @@ namespace Console
 
                 foreach (ConsoleCommand command in DeveloperConsole.Commands.Values)
                 {
-                    DeveloperConsole.Instance.AddMessageToConsole("- " + command.Name);
+                    DeveloperConsole.Instance.AddMessageToConsole("-" + command.Name);
                 }
 
                 return;
             }
             
             if(DeveloperConsole.isValidCommand(args[0])){
-                DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsole.Commands[args[0]].Help);
+                DeveloperConsole.Instance.AddTagedMessageToConsole(DeveloperConsole.Commands[args[0]].Help);
             }
             else
             {
-                DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage);
+                DeveloperConsole.Instance.AddTagedMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage, MessageTag.WARNING);
             }
         }
 
