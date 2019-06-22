@@ -21,7 +21,7 @@ namespace Console
             Name = "Clear";
             Command = "clear";
             Description = "Clear the console.";
-            Help = "Use this commands with no arguments to clear the console!.";
+            Help = "Usage: \"Clear\"";
 
             AddCommandToConsole();
         }

@@ -40,6 +40,8 @@ namespace Console
             Instance = this;
             Commands = new Dictionary<string, ConsoleCommand>();
             commandsHistoryList = new List<string>();
+
+            DontDestroyOnLoad(this.gameObject);
         }
 
         private void OnEnable()
@@ -60,7 +62,7 @@ namespace Console
 
             if (!DeveloperConsoleUtils.IsEventSystemOnScene())
             {
-                DeveloperConsoleUtils.CreateEventSystem();
+                DeveloperConsoleUtils.CreateEventSystem(this.transform);
             }
 
             CreateCommands();
@@ -126,7 +128,7 @@ namespace Console
 
         public static bool isValidCommand(string command)
         {
-            return Commands.ContainsKey(command);
+            return Commands.ContainsKey(command.ToLower());
         }
 
         public void OpenDeveloperConsole()
@@ -165,11 +167,12 @@ namespace Console
             consoleText.text += msg + "\n";
         }
 
+        //Parse the input by spaces with the first word non case sensitive
         private string[] ParseInput(string input)
         {
-            input = input.ToLower();
-
             string[] _input = input.Split(null);
+
+            _input[0] = _input[0].ToLower();
 
             return _input;
         }
@@ -183,6 +186,7 @@ namespace Console
             //Unity functionality commands
             CommandLoadScene.CreateCommand();
             CommandTimeScale.CreateCommand();
+            CommandGameObjectActiveDisactive.CreateCommand();
 
             //Basic commands
             CommandHelp.CreateCommand();

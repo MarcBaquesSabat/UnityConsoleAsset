@@ -12,7 +12,9 @@ namespace Console
         public static string MissingCommandArgumentsMessage = "No arguments found.";
         public static string MissingAndCreateEventSystemMessage = "Can't find an EventSystem. An EventSystem has been created.";
         public static string TimeScaleChangedMessage = "TimeScale changed to ";
+        public static string GameObjectNotFoundMessage = "The object searched by name/tag hasn't been found. Object: ";
+        public static string SceneLoadedMessage = "The scene has been succesfully loaded. Scene: ";
 
-        public static string NotFoundSceneMessage = "The scene you are trying to load doesn't exist or it isn't on the build list.";
+        public static string NotFoundSceneMessage = "The scene you are trying to load doesn't exist or it isn't on the build list. Scene: ";
     }
 }

@@ -19,8 +19,8 @@ namespace Console
         {
             Name = "Help";
             Command = "help";
-            Description = "Shows all the available commands.";
-            Help = "Use this commands with no arguments to show all the commands available or followed by the command to show the help of the command.";
+            Description = "Shows all the available commands or the usage of a command if it's followed by a command.";
+            Help = "Usage: \"Help <(command)>";
 
             AddCommandToConsole();
         }

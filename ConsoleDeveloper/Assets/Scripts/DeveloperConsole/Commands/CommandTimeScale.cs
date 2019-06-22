@@ -19,7 +19,7 @@ namespace Console
             Name = "TimeScale";
             Command = "timescale";
             Description = "Change the timescale of the game.";
-            Help = "Use this commands followed to the value of the desired time scale.";
+            Help = "Usage: \"TimeScale <num>\"";
 
             AddCommandToConsole();
         }

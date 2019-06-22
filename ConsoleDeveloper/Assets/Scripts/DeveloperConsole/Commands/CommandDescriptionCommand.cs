@@ -20,7 +20,7 @@ namespace Console
             Name = "Description";
             Command = "desc";
             Description = "Displays the description of a command.";
-            Help = "Usage: \"help <(command)>\".";
+            Help = "Usage: \"Desc <(command)>\"";
 
             AddCommandToConsole();
         }

@@ -20,7 +20,7 @@ namespace Console
             Name = "LoadScene";
             Command = "loadscene";
             Description = "Load the scene if it's on the build.";
-            Help = "Use this commands like \"LoadScene <sceneName> <(LoadModeType)>\".";
+            Help = "Usage: \"LoadScene <sceneName> <(LoadModeType)>\"";
 
             AddCommandToConsole();
         }
@@ -30,11 +30,12 @@ namespace Console
         {
             if (!Application.CanStreamedLevelBeLoaded(args[0]))
             {
-                Debug.LogWarning(DeveloperConsoleMessages.NotFoundSceneMessage);
+                DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.NotFoundSceneMessage + args[0]);
                 return;
             }
             
             SceneManager.LoadScene(args[0]);
+            DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.SceneLoadedMessage + args[0]);
         }
 
         public static CommandLoadScene CreateCommand()

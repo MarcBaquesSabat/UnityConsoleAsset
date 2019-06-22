@@ -19,8 +19,8 @@ namespace Console
         {
             Name = "Quit";
             Command = "quit";
-            Description = "Quits the application.";
-            Help = "Use this commands with no arguments to force Unity to quit!.";
+            Description = "Quits the application or play mode on Unity Editor.";
+            Help = "Usage: \"Quit\"";
 
             AddCommandToConsole();
         }

@@ -22,13 +22,14 @@ namespace Console
             return (Object.FindObjectOfType<EventSystem>() != null);
         }
 
-        public static void CreateEventSystem()
+        public static void CreateEventSystem(Transform parent)
         {
             Debug.LogWarning(DeveloperConsoleMessages.MissingAndCreateEventSystemMessage);
             GameObject go = new GameObject();
             go.name = "EventSystem";
             go.AddComponent<EventSystem>();
             go.AddComponent<StandaloneInputModule>();
+            go.transform.SetParent(parent);
         }
     }
 }
