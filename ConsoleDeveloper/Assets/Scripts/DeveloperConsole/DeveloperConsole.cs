@@ -33,7 +33,7 @@ namespace Console
         [SerializeField]
         private GameObject logPrefab = null;
         [SerializeField]
-        private int maxLogsOnConsole = 40;
+        private int maxLogsOnConsole = 20;
         [SerializeField]
         private int maxCommandsListSize = 20;
 
@@ -98,8 +98,8 @@ namespace Console
                 {
                     if (inputText.text != "")
                     {
-                        AddMessageToConsole(inputText.text, ConsoleLogTag.NONE);
-
+                        CreateBaseLog(inputText.text);
+                        
                         RegisterCommandOnCommandsHistoryList(inputText.text);
                         ProcessCommand(ParseInput(inputText.text));
 
@@ -134,12 +134,11 @@ namespace Console
         /// </summary>
         /// <param name="msg">Message</param>
         /// <param name="tag">Tag of the message, by default it's defined to ConsoleLogTag.LOG</param>
-        public void AddMessageToConsole(string msg, ConsoleLogTag tag = ConsoleLogTag.NONE)
+        public void AddMessageToConsole( string msg, ConsoleLogTag tag = ConsoleLogTag.NONE)
         {
-            GameObject go = CreateLog(msg, tag);
-
+            consoleLogList[consoleLogList.Count - 1].GetComponent<ConsoleLog>().SetLog(msg, tag);
             //Control del numero de logs en la consola
-            consoleLogList.Add(go);
+            
             if (consoleLogList.Count > maxLogsOnConsole)
             {
                 Destroy(consoleLogList[0]);
@@ -165,6 +164,7 @@ namespace Console
         {
             consoleCanvas.gameObject.SetActive(true);
             consoleState = ConsoleState.ACTIVE;
+            consoleInput.ActivateInputField();
         }
 
         public void CloseDeveloperConsole()
@@ -183,7 +183,7 @@ namespace Console
             //Command doesnt exist on dictionary
             if (DeveloperConsoleUtils.isInputInvalid(_input) || !Commands.ContainsKey(_input[0]))
             {
-                AddMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage, ConsoleLogTag.WARNING);
+                AddMessageToConsole( DeveloperConsoleMessages.UnrecognizedCommandMessage, ConsoleLogTag.WARNING);
             }
             else
             {
@@ -236,18 +236,23 @@ namespace Console
             actualIndexCommandSelected = commandsHistoryList.Count - 1;
         }
 
-
-        private GameObject CreateLog(string msg, ConsoleLogTag tag)
+        private void CreateBaseLog(string command)
         {
             GameObject go = Instantiate(logPrefab, newLogParent);
             ConsoleLog log = go.GetComponent<ConsoleLog>();
-            log.SetLog(msg, tag);
-            return go;
+            log.SetBaseLog(command);
+            consoleLogList.Add(go);
+        }
+        private void CreateBaseLog()
+        {
+            GameObject go = Instantiate(logPrefab, newLogParent);
+            consoleLogList.Add(go);
         }
 
         //Handles Debug. message of Unity
         private void HandleLog(string logMessage, string stackTrace, LogType type)
         {
+            CreateBaseLog();
             AddMessageToConsole(logMessage, DeveloperConsoleUtils.LogTypeToMessageType(type));
         }
 

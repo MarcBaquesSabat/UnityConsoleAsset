@@ -30,18 +30,19 @@ namespace Console
         {
             if(DeveloperConsoleUtils.noValidArguments(args))
             {
-                DeveloperConsole.Instance.AddMessageToConsole("Avilable commands:");
-
+                string help = "";
+                help += "Avilable commands:\n";
                 foreach (ConsoleCommand command in DeveloperConsole.Commands.Values)
                 {
-                    DeveloperConsole.Instance.AddMessageToConsole("-" + command.Name);
+                    help += "-" + command.Name + "\n";
                 }
+                DeveloperConsole.Instance.AddMessageToConsole(help);
 
                 return;
             }
             
             if(DeveloperConsole.isValidCommand(args[0])){
-                DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsole.Commands[args[0]].Help);
+                DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsole.Commands[args[0]].Help, ConsoleLogTag.LOG);
             }
             else
             {

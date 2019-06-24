@@ -35,7 +35,7 @@ namespace Console
             }
             
             SceneManager.LoadScene(args[0]);
-            DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.SceneLoadedMessage + args[0]);
+            DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.SceneLoadedMessage + args[0], ConsoleLogTag.LOG);
         }
 
         public static CommandLoadScene CreateCommand()

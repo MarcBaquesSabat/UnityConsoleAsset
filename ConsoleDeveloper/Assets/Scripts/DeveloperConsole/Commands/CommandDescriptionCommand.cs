@@ -20,7 +20,7 @@ namespace Console
             Name = "Description";
             Command = "description";
             Description = "Displays the description of a command.";
-            Help = "Usage: \"Desc <(command)>\"";
+            Help = "Usage: \"Description <(command)>\"";
 
             AddCommandToConsole();
         }
@@ -36,7 +36,7 @@ namespace Console
             
             if (DeveloperConsole.isValidCommand(args[0]))
             {
-                DeveloperConsole.Instance.AddMessageToConsole(args[0] + " description: " + DeveloperConsole.Commands[args[0]].Description);
+                DeveloperConsole.Instance.AddMessageToConsole(args[0] + " description: " + DeveloperConsole.Commands[args[0]].Description, ConsoleLogTag.LOG);
             }
             else
             {

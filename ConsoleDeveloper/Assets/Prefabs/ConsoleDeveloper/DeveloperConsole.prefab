@@ -1945,6 +1945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1992ab00e097f449413a2f561e7ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  configuration: {fileID: 0}
   consoleCanvas: {fileID: 4634513808028155704}
   consoleText: {fileID: 4634513807175877113}
   inputText: {fileID: 4634513808176379386}
@@ -1952,6 +1953,7 @@ MonoBehaviour:
   newLogParent: {fileID: 4634513808041063586}
   logPrefab: {fileID: 4470090791076135689, guid: a2f1f051e7e13ac478393b4d1e4ddc92,
     type: 3}
+  maxLogsOnConsole: 20
   maxCommandsListSize: 20
 --- !u!1 &4634513808169820874
 GameObject:
@@ -2882,6 +2884,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090791076135693, guid: a2f1f051e7e13ac478393b4d1e4ddc92,
+        type: 3}
+      propertyPath: m_text
+      value: Developer Console...
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090791076135693, guid: a2f1f051e7e13ac478393b4d1e4ddc92,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090791076135693, guid: a2f1f051e7e13ac478393b4d1e4ddc92,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090791076135693, guid: a2f1f051e7e13ac478393b4d1e4ddc92,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090791076135693, guid: a2f1f051e7e13ac478393b4d1e4ddc92,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090791076135693, guid: a2f1f051e7e13ac478393b4d1e4ddc92,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2f1f051e7e13ac478393b4d1e4ddc92, type: 3}

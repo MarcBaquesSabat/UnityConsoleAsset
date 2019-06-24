@@ -42,7 +42,7 @@ namespace Console
             if (go != null)
             {
                 go.SetActive(false);
-                DeveloperConsole.Instance.AddMessageToConsole("The object " + args[1] + " has been disactivated.");
+                DeveloperConsole.Instance.AddMessageToConsole("The object " + args[1] + " has been disactivated.", ConsoleLogTag.LOG);
                 return;
             }
 

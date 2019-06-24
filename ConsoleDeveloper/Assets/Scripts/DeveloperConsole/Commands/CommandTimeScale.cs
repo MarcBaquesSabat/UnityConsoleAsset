@@ -31,7 +31,7 @@ namespace Console
             
             Time.timeScale = newTimeScale;
 
-            DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.TimeScaleChangedMessage + newTimeScale.ToString());
+            DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.TimeScaleChangedMessage + newTimeScale.ToString(), ConsoleLogTag.LOG);
         }
 
         public static CommandTimeScale CreateCommand()
