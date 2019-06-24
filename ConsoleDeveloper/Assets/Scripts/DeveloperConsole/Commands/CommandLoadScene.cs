@@ -30,12 +30,12 @@ namespace Console
         {
             if (!Application.CanStreamedLevelBeLoaded(args[0]))
             {
-                DeveloperConsole.Instance.AddTagedMessageToConsole(DeveloperConsoleMessages.NotFoundSceneMessage + args[0], MessageTag.ERROR);
+                DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.NotFoundSceneMessage + args[0], ConsoleLogTag.ERROR);
                 return;
             }
             
             SceneManager.LoadScene(args[0]);
-            DeveloperConsole.Instance.AddTagedMessageToConsole(DeveloperConsoleMessages.SceneLoadedMessage + args[0]);
+            DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.SceneLoadedMessage + args[0]);
         }
 
         public static CommandLoadScene CreateCommand()

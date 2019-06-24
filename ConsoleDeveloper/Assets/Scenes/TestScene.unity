@@ -120,36 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &835842470
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 835842471}
-  m_Layer: 0
-  m_Name: Prueba
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &835842471
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 835842470}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 263.9561, y: 212.6777, z: 11.1345215}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1650086831
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -254,13 +224,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4634513807175877116, guid: 74047ac8916f2ec4398471d84dd4e097,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -16.759995
+      propertyPath: m_SizeDelta.x
+      value: 280.82
       objectReference: {fileID: 0}
     - target: {fileID: 4634513807175877116, guid: 74047ac8916f2ec4398471d84dd4e097,
         type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 280.82
+      propertyPath: m_AnchoredPosition.y
+      value: -16.759995
       objectReference: {fileID: 0}
     - target: {fileID: 4634513807175877116, guid: 74047ac8916f2ec4398471d84dd4e097,
         type: 3}
@@ -269,18 +239,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4634513807143748515, guid: 74047ac8916f2ec4398471d84dd4e097,
         type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4634513807143748515, guid: 74047ac8916f2ec4398471d84dd4e097,
-        type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.00024414062
-      objectReference: {fileID: 0}
-    - target: {fileID: 5873057233592814970, guid: 74047ac8916f2ec4398471d84dd4e097,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74047ac8916f2ec4398471d84dd4e097, type: 3}

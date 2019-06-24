@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Console
 {
-    public enum MessageTag { LOG, WARNING, ERROR, MAX};
+    public enum ConsoleLogTag { LOG, WARNING, ERROR, NONE, MAX};
 
     public static class DeveloperConsoleUtils
     {
@@ -34,23 +34,28 @@ namespace Console
             go.transform.SetParent(parent);
         }
 
-        public static MessageTag LogTypeToMessageType(LogType logType)
+        public static ConsoleLogTag LogTypeToMessageType(LogType logType)
         {
             switch (logType)
             {
                 case LogType.Error:
-                    return MessageTag.ERROR;
+                    return ConsoleLogTag.ERROR;
                 case LogType.Assert:
-                    return MessageTag.ERROR;
+                    return ConsoleLogTag.ERROR;
                 case LogType.Warning:
-                    return MessageTag.WARNING;
+                    return ConsoleLogTag.WARNING;
                 case LogType.Log:
-                    return MessageTag.LOG;
+                    return ConsoleLogTag.LOG;
                 case LogType.Exception:
-                    return MessageTag.ERROR;
+                    return ConsoleLogTag.ERROR;
                 default:
-                    return MessageTag.MAX;
+                    return ConsoleLogTag.MAX;
             }
+        }
+
+        public static string CreateTagString(ConsoleLogTag tag)
+        {
+            return (tag == ConsoleLogTag.NONE || tag == ConsoleLogTag.MAX) ? "" : "[" + tag.ToString() + "]";
         }
     }
 }

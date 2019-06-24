@@ -12,6 +12,9 @@ namespace Console
     {
         public static DeveloperConsole Instance { get; set; }
         public static Dictionary<string, ConsoleCommand> Commands { get; private set; }
+        public static List<GameObject> consoleLogList { get; private set; }
+
+        public ConsoleConfiguration configuration = null;
 
         [Header("UI Components")]
         [SerializeField]
@@ -23,6 +26,14 @@ namespace Console
         [SerializeField]
         private InputField consoleInput = null;
 
+        
+        [Header("Internal Configuration")]
+        [SerializeField]
+        private Transform newLogParent = null;
+        [SerializeField]
+        private GameObject logPrefab = null;
+        [SerializeField]
+        private int maxLogsOnConsole = 40;
         [SerializeField]
         private int maxCommandsListSize = 20;
 
@@ -39,6 +50,7 @@ namespace Console
 
             Instance = this;
             Commands = new Dictionary<string, ConsoleCommand>();
+            consoleLogList = new List<GameObject>();
             commandsHistoryList = new List<string>();
 
             DontDestroyOnLoad(this.gameObject);
@@ -86,7 +98,7 @@ namespace Console
                 {
                     if (inputText.text != "")
                     {
-                        AddMessageToConsole(inputText.text);
+                        AddMessageToConsole(inputText.text, ConsoleLogTag.NONE);
 
                         RegisterCommandOnCommandsHistoryList(inputText.text);
                         ProcessCommand(ParseInput(inputText.text));
@@ -121,21 +133,18 @@ namespace Console
         /// Add a message to console with a specific tag.
         /// </summary>
         /// <param name="msg">Message</param>
-        /// <param name="tag">Tag of the message</param>
-        public void AddTagedMessageToConsole(string msg, MessageTag tag = MessageTag.LOG)
+        /// <param name="tag">Tag of the message, by default it's defined to ConsoleLogTag.LOG</param>
+        public void AddMessageToConsole(string msg, ConsoleLogTag tag = ConsoleLogTag.NONE)
         {
-            string _message = "[" + tag.ToString() + "] " + msg + "\n";
+            GameObject go = CreateLog(msg, tag);
 
-            consoleText.text += _message;
-        }
-
-        /// <summary>
-        /// Add a message to console.
-        /// </summary>
-        /// <param name="msg">Message</param>
-        public void AddMessageToConsole(string msg)
-        {
-            consoleText.text += (msg + "\n");
+            //Control del numero de logs en la consola
+            consoleLogList.Add(go);
+            if (consoleLogList.Count > maxLogsOnConsole)
+            {
+                Destroy(consoleLogList[0]);
+                consoleLogList.Remove(consoleLogList[0]);
+            }
         }
 
         //Add the command to the dictionary from the consoleCommand
@@ -174,7 +183,7 @@ namespace Console
             //Command doesnt exist on dictionary
             if (DeveloperConsoleUtils.isInputInvalid(_input) || !Commands.ContainsKey(_input[0]))
             {
-                AddTagedMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage, MessageTag.WARNING);
+                AddMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage, ConsoleLogTag.WARNING);
             }
             else
             {
@@ -227,10 +236,19 @@ namespace Console
             actualIndexCommandSelected = commandsHistoryList.Count - 1;
         }
 
+
+        private GameObject CreateLog(string msg, ConsoleLogTag tag)
+        {
+            GameObject go = Instantiate(logPrefab, newLogParent);
+            ConsoleLog log = go.GetComponent<ConsoleLog>();
+            log.SetLog(msg, tag);
+            return go;
+        }
+
         //Handles Debug. message of Unity
         private void HandleLog(string logMessage, string stackTrace, LogType type)
         {
-            AddTagedMessageToConsole(logMessage, DeveloperConsoleUtils.LogTypeToMessageType(type));
+            AddMessageToConsole(logMessage, DeveloperConsoleUtils.LogTypeToMessageType(type));
         }
 
         //Getters and setters

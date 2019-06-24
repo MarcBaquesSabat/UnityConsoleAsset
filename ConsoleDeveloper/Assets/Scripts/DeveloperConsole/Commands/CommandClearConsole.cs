@@ -29,8 +29,10 @@ namespace Console
         //Logic of the command
         public override void RunCommand(string[] args)
         {
-            DeveloperConsole.Instance.getInputField().text = DeveloperConsoleMessages.DefaultConsoleInputMessage;
-            DeveloperConsole.Instance.getInputText().text = DeveloperConsoleMessages.DefaultConsoleTextMessage + "\n";
+            foreach (GameObject gameObject in DeveloperConsole.consoleLogList)
+            {
+                GameObject.Destroy(gameObject);
+            }
         }
 
         public static CommandClearConsole CreateCommand()

@@ -20,7 +20,7 @@ namespace Console
             Name = "Disactive";
             Command = "disactive";
             Description = "Disactive the serached object. It can be search by Tag/Name.";
-            Help = "Usage: \"GameObject <search by> <object>\"";
+            Help = "Usage: \"Disactive <search by> <object>\"";
 
             AddCommandToConsole();
         }
@@ -42,11 +42,11 @@ namespace Console
             if (go != null)
             {
                 go.SetActive(false);
-                DeveloperConsole.Instance.AddTagedMessageToConsole("The object " + args[1] + " has been disactivated.");
+                DeveloperConsole.Instance.AddMessageToConsole("The object " + args[1] + " has been disactivated.");
                 return;
             }
 
-            DeveloperConsole.Instance.AddTagedMessageToConsole(DeveloperConsoleMessages.GameObjectNotFoundMessage + args[1], MessageTag.WARNING);
+            DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.GameObjectNotFoundMessage + args[1], ConsoleLogTag.WARNING);
         }
 
         public static CommandDisactiveGameObject CreateCommand()

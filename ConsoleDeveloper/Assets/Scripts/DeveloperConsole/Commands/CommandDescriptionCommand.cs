@@ -30,7 +30,7 @@ namespace Console
         {
             if (DeveloperConsoleUtils.noValidArguments(args))
             {
-                DeveloperConsole.Instance.AddTagedMessageToConsole(DeveloperConsoleMessages.MissingCommandArgumentsMessage, MessageTag.ERROR);
+                DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.MissingCommandArgumentsMessage, ConsoleLogTag.ERROR);
                 return;
             }
             
@@ -40,7 +40,7 @@ namespace Console
             }
             else
             {
-                DeveloperConsole.Instance.AddTagedMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage, MessageTag.ERROR);
+                DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage, ConsoleLogTag.ERROR);
             }
             
         }

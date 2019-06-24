@@ -41,11 +41,11 @@ namespace Console
             }
             
             if(DeveloperConsole.isValidCommand(args[0])){
-                DeveloperConsole.Instance.AddTagedMessageToConsole(DeveloperConsole.Commands[args[0]].Help);
+                DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsole.Commands[args[0]].Help);
             }
             else
             {
-                DeveloperConsole.Instance.AddTagedMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage, MessageTag.WARNING);
+                DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage, ConsoleLogTag.WARNING);
             }
         }
 
