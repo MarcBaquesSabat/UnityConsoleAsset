@@ -36,7 +36,7 @@ namespace Console
                 {
                     help += "-" + command.Name + "\n";
                 }
-                DeveloperConsole.Instance.AddMessageToConsole(help);
+                DeveloperConsole.Instance.AddMessageToConsole(help, ConsoleLogTag.LOG);
 
                 return;
             }

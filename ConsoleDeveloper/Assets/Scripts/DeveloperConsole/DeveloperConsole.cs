@@ -22,11 +22,10 @@ namespace Console
         [SerializeField]
         private TMPro.TextMeshProUGUI consoleText = null;
         [SerializeField]
-        private Text inputText = null;
+        private TMPro.TextMeshProUGUI inputText = null;
         [SerializeField]
-        private InputField consoleInput = null;
+        TMPro.TMP_InputField consoleInput = null;
 
-        
         [Header("Internal Configuration")]
         [SerializeField]
         private Transform newLogParent = null;
@@ -262,7 +261,7 @@ namespace Console
             return consoleText;
         }
 
-        public InputField getInputField()
+        public TMPro.TMP_InputField getInputField()
         {
             return consoleInput;
         }
