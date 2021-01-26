@@ -21,8 +21,6 @@ namespace Console
             Command = "loadscene";
             Description = "Load the scene if it's on the build.";
             Help = "Usage: \"LoadScene <sceneName> <(LoadModeType)>\"";
-
-            AddCommandToConsole();
         }
 
         //Logic of the command
@@ -36,11 +34,6 @@ namespace Console
             
             SceneManager.LoadScene(args[0]);
             DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.SceneLoadedMessage + args[0], ConsoleLogTag.LOG);
-        }
-
-        public static CommandLoadScene CreateCommand()
-        {
-            return new CommandLoadScene();
         }
     }
 }

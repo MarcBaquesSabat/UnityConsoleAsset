@@ -1,10 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewConsoleConfiguration", menuName = ("/Console Configuration"))]
+[CreateAssetMenu(fileName = "NewConsoleConfiguration", menuName = ("Developer Console/Console Configuration"))]
 public class ConsoleConfiguration : ScriptableObject
 {
+    //public Color backgroundColor;
+    //public Color fontColor;
+    //public Font consoleFont;
+
     public bool showUnityLogsOnConsole = true;
     public bool showCommandsCreationMessage = false;
+    public bool showStackErrorLogs = false;
 }

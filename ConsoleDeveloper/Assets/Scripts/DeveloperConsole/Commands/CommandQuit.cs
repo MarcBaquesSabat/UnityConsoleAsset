@@ -21,8 +21,6 @@ namespace Console
             Command = "quit";
             Description = "Quits the application or play mode on Unity Editor.";
             Help = "Usage: \"Quit\"";
-
-            AddCommandToConsole();
         }
 
         //Logic of the command
@@ -40,9 +38,5 @@ namespace Console
             }
         }
 
-        public static CommandQuit CreateCommand()
-        {
-            return new CommandQuit();
-        }
     }
 }

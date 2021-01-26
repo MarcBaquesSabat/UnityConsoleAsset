@@ -22,8 +22,6 @@ namespace Console
             Command = "clear";
             Description = "Clear the console.";
             Help = "Usage: \"Clear\"";
-
-            AddCommandToConsole();
         }
 
         //Logic of the command
@@ -33,11 +31,6 @@ namespace Console
             {
                 GameObject.Destroy(gameObject);
             }
-        }
-
-        public static CommandClearConsole CreateCommand()
-        {
-            return new CommandClearConsole();
         }
     }
 }

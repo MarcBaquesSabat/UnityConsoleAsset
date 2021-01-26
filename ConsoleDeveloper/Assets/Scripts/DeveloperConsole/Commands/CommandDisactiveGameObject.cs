@@ -21,8 +21,6 @@ namespace Console
             Command = "disactive";
             Description = "Disactive the serached object. It can be search by Tag/Name.";
             Help = "Usage: \"Disactive <search by> <object>\"";
-
-            AddCommandToConsole();
         }
 
         //Logic of the command
@@ -47,11 +45,6 @@ namespace Console
             }
 
             DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.GameObjectNotFoundMessage + args[1], ConsoleLogTag.WARNING);
-        }
-
-        public static CommandDisactiveGameObject CreateCommand()
-        {
-            return new CommandDisactiveGameObject();
         }
     }
 }

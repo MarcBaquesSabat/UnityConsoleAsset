@@ -21,8 +21,6 @@ namespace Console
             Command = "help";
             Description = "Shows all the available commands or the usage of a command if it's followed by a command.";
             Help = "Usage: \"Help <(command)>";
-
-            AddCommandToConsole();
         }
 
         //Logic of the command
@@ -48,11 +46,6 @@ namespace Console
             {
                 DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage, ConsoleLogTag.WARNING);
             }
-        }
-
-        public static CommandHelp CreateCommand()
-        {
-            return new CommandHelp();
         }
 
     }

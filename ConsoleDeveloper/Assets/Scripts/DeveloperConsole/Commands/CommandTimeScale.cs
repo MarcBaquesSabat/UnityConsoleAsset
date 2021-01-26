@@ -20,8 +20,6 @@ namespace Console
             Command = "timescale";
             Description = "Change the timescale of the game.";
             Help = "Usage: \"TimeScale <num>\"";
-
-            AddCommandToConsole();
         }
 
         //Logic of the command
@@ -34,9 +32,5 @@ namespace Console
             DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.TimeScaleChangedMessage + newTimeScale.ToString(), ConsoleLogTag.LOG);
         }
 
-        public static CommandTimeScale CreateCommand()
-        {
-            return new CommandTimeScale();
-        }
     }
 }

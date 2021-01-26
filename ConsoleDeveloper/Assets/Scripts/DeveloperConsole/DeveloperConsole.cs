@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Reflection;
 
 namespace Console
 {
@@ -14,11 +15,11 @@ namespace Console
         public static Dictionary<string, ConsoleCommand> Commands { get; private set; }
         public static List<GameObject> consoleLogList { get; private set; }
 
-        public ConsoleConfiguration configuration = null;
-
         [Header("UI Components")]
         [SerializeField]
-        private Canvas consoleCanvas = null;
+        private GameObject consoleCanvas = null;
+        [SerializeField]
+        private GameObject consoleConfigurationCanvas = null;
         [SerializeField]
         private TMPro.TextMeshProUGUI consoleText = null;
         [SerializeField]
@@ -69,7 +70,7 @@ namespace Console
         {
             actualIndexCommandSelected = 0;
             consoleText.text += "\n";
-            consoleCanvas.gameObject.SetActive(false);
+            consoleCanvas.SetActive(false);
 
             if (!DeveloperConsoleUtils.IsEventSystemOnScene())
             {
@@ -136,7 +137,6 @@ namespace Console
         public void AddMessageToConsole( string msg, ConsoleLogTag tag = ConsoleLogTag.NONE)
         {
             consoleLogList[consoleLogList.Count - 1].GetComponent<ConsoleLog>().SetLog(msg, tag);
-            //Control del numero de logs en la consola
             
             if (consoleLogList.Count > maxLogsOnConsole)
             {
@@ -161,15 +161,17 @@ namespace Console
 
         public void OpenDeveloperConsole()
         {
-            consoleCanvas.gameObject.SetActive(true);
+            consoleCanvas.SetActive(true);
             consoleState = ConsoleState.ACTIVE;
             consoleInput.ActivateInputField();
         }
 
         public void CloseDeveloperConsole()
         {
-            consoleCanvas.gameObject.SetActive(false);
+            consoleCanvas.SetActive(false);
             consoleState = ConsoleState.DISACTIVE;
+            if (consoleConfigurationCanvas.activeInHierarchy)
+                consoleConfigurationCanvas.SetActive(false);
         }
 
         public bool ConsoleIsActive()
@@ -177,9 +179,19 @@ namespace Console
             return consoleState == ConsoleState.ACTIVE;
         }
 
+        public void ToggleConfigurationPanel()
+        {
+            consoleConfigurationCanvas.SetActive(!consoleConfigurationCanvas.activeInHierarchy);
+        }
+
+
         private void ProcessCommand( string[] _input)
         {
             //Command doesnt exist on dictionary
+            bool valid = DeveloperConsoleUtils.isInputInvalid(_input);
+            Debug.Log(_input[0]);
+            bool valid2 = !Commands.ContainsKey(_input[0]);
+
             if (DeveloperConsoleUtils.isInputInvalid(_input) || !Commands.ContainsKey(_input[0]))
             {
                 AddMessageToConsole( DeveloperConsoleMessages.UnrecognizedCommandMessage, ConsoleLogTag.WARNING);
@@ -204,19 +216,15 @@ namespace Console
         //Modify this function adding all your own created commands
         private void CreateCommands()
         {
-            //User commands
-            
+            var allCommandsTypes = Assembly.GetAssembly(typeof(ConsoleCommand)).GetTypes().Where(t => typeof(ConsoleCommand).IsAssignableFrom(t) && t.IsAbstract == false);
 
-            //Unity functionality commands
-            CommandLoadScene.CreateCommand();
-            CommandTimeScale.CreateCommand();
-            CommandDisactiveGameObject.CreateCommand();
+            foreach (var commandType in allCommandsTypes)
+            {
+                ConsoleCommand command = Activator.CreateInstance(commandType) as ConsoleCommand;
+                command.AddCommandToConsole();
+            }
 
-            //Basic commands
-            CommandHelp.CreateCommand();
-            CommandDescriptionCommand.CreateCommand();
-            CommandClearConsole.CreateCommand();
-            CommandQuit.CreateCommand();
+            Debug.Log(Commands);
         }
 
         //Register commands whether are valid or not
@@ -251,6 +259,7 @@ namespace Console
         //Handles Debug. message of Unity
         private void HandleLog(string logMessage, string stackTrace, LogType type)
         {
+            if()
             CreateBaseLog();
             AddMessageToConsole(logMessage, DeveloperConsoleUtils.LogTypeToMessageType(type));
         }
@@ -260,7 +269,6 @@ namespace Console
         {
             return consoleText;
         }
-
         public TMPro.TMP_InputField getInputField()
         {
             return consoleInput;

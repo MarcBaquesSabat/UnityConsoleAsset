@@ -21,8 +21,6 @@ namespace Console
             Command = "description";
             Description = "Displays the description of a command.";
             Help = "Usage: \"Description <(command)>\"";
-
-            AddCommandToConsole();
         }
 
         //Logic of the command
@@ -43,11 +41,6 @@ namespace Console
                 DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsoleMessages.UnrecognizedCommandMessage, ConsoleLogTag.ERROR);
             }
             
-        }
-
-        public static CommandDescriptionCommand CreateCommand()
-        {
-            return new CommandDescriptionCommand();
         }
     }
 }
