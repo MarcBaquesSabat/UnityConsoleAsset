@@ -157,15 +157,6 @@ namespace Console
             }
         }
 
-        //Add the command to the dictionary from the consoleCommand
-        public static void AddCommadsToConsole(string _name, ConsoleCommand _command)
-        {
-            if (!Commands.ContainsKey(_name))
-            {
-                Commands.Add(_name, _command);
-            }
-        }
-
         public static bool isValidCommand(string command)
         {
             return Commands.ContainsKey(command.ToLower());
@@ -231,10 +222,21 @@ namespace Console
             foreach (var commandType in allCommandsTypes)
             {
                 ConsoleCommand command = Activator.CreateInstance(commandType) as ConsoleCommand;
-                command.AddCommandToConsole();
+                AddCommandToConsole(command);
+                
+                Debug.Log($"Command: {command.Name} has been added.");
             }
         }
-
+        
+        //Add the command to the dictionary from the consoleCommand
+        private void AddCommandToConsole(ConsoleCommand _command)
+        {
+            if (!Commands.ContainsKey(_command.Command))
+            {
+                Commands.Add(_command.Command, _command);
+            }
+        }
+        
         //Register commands whether are valid or not
         private void RegisterCommandOnCommandsHistoryList(string _command)
         {

@@ -15,15 +15,6 @@ namespace Console
 
         public abstract string Help { get; protected set; }
 
-        //Add automatically the command to the console
-        public void AddCommandToConsole()
-        {
-            string addMesage = " command has been added to the console.";
-
-            DeveloperConsole.AddCommadsToConsole(Command, this);
-            Debug.Log(Name + addMesage);
-        }
-
         //Logic of the command
         public abstract void RunCommand(string[] args);
     }
