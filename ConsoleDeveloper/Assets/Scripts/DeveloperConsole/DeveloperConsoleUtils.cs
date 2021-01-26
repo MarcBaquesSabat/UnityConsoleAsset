@@ -7,6 +7,11 @@ namespace Console
 
     public static class DeveloperConsoleUtils
     {
+        public static string CleanStringZeroWhidthSpace(string str)
+        {
+            return str.Replace("\u200B", "");
+        }
+        
         public static bool noValidArguments(string[] args)
         {
             if (args == null || !(args.Length > 0)) return true;
@@ -14,9 +19,11 @@ namespace Console
             return false;
         }
 
-        public static bool isInputInvalid(string[] _input)
+        public static bool IsInputValid(string[] _input)
         {
-            return (_input.Length == 0 || _input == null);
+            bool a = _input == null;
+            bool b = _input.Length == 0;
+            return !(_input.Length == 0 || _input == null);
         }
 
         public static bool IsEventSystemOnScene()

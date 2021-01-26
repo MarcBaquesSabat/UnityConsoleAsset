@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace Console
 {
@@ -27,7 +28,13 @@ namespace Console
         [SerializeField]
         TMPro.TMP_InputField consoleInput = null;
 
-        [Header("Internal Configuration")]
+        [Header("Internal Configuration")] 
+        [SerializeField]
+        private KeyCode openKey = KeyCode.Tab;
+        [SerializeField]
+        private KeyCode enterKey = KeyCode.Return;
+        [SerializeField] 
+        private bool showDebugLogsConsole = false;
         [SerializeField]
         private Transform newLogParent = null;
         [SerializeField]
@@ -58,12 +65,14 @@ namespace Console
 
         private void OnEnable()
         {
-            Application.logMessageReceived += HandleLog;
+            if(showDebugLogsConsole)
+                Application.logMessageReceived += HandleLog;
         }
 
         private void OnDisable()
         {
-            Application.logMessageReceived -= HandleLog;
+            if(showDebugLogsConsole)
+                Application.logMessageReceived -= HandleLog;
         }
 
         private void Start()
@@ -83,7 +92,7 @@ namespace Console
         private void Update()
         {
             //Activation and desactivation
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetKeyDown(openKey))
             {
                 if (ConsoleIsActive())
                     CloseDeveloperConsole();
@@ -94,14 +103,17 @@ namespace Console
             //Console active
             if (ConsoleIsActive())
             {
-                if (Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(enterKey))
                 {
-                    if (inputText.text != "")
+                    string commandString = DeveloperConsoleUtils.CleanStringZeroWhidthSpace(inputText.text);
+                    
+                    if (commandString != "")
                     {
-                        CreateBaseLog(inputText.text);
+                        commandString = DeveloperConsoleUtils.CleanStringZeroWhidthSpace(commandString);
+                        CreateBaseLog(commandString);
                         
-                        RegisterCommandOnCommandsHistoryList(inputText.text);
-                        ProcessCommand(ParseInput(inputText.text));
+                        RegisterCommandOnCommandsHistoryList(commandString);
+                        ProcessCommand(ParseInput(commandString));
 
                         ResetConsole();
                     }
@@ -186,13 +198,11 @@ namespace Console
 
 
         private void ProcessCommand( string[] _input)
-        {
+        {    
             //Command doesnt exist on dictionary
-            bool valid = DeveloperConsoleUtils.isInputInvalid(_input);
-            Debug.Log(_input[0]);
-            bool valid2 = !Commands.ContainsKey(_input[0]);
 
-            if (DeveloperConsoleUtils.isInputInvalid(_input) || !Commands.ContainsKey(_input[0]))
+
+            if (!DeveloperConsoleUtils.IsInputValid(_input) || !Commands.ContainsKey(_input[0]))
             {
                 AddMessageToConsole( DeveloperConsoleMessages.UnrecognizedCommandMessage, ConsoleLogTag.WARNING);
             }
@@ -214,7 +224,7 @@ namespace Console
         }
 
         //Modify this function adding all your own created commands
-        private void CreateCommands()
+        private void CreateCommands()    
         {
             var allCommandsTypes = Assembly.GetAssembly(typeof(ConsoleCommand)).GetTypes().Where(t => typeof(ConsoleCommand).IsAssignableFrom(t) && t.IsAbstract == false);
 
@@ -223,8 +233,6 @@ namespace Console
                 ConsoleCommand command = Activator.CreateInstance(commandType) as ConsoleCommand;
                 command.AddCommandToConsole();
             }
-
-            Debug.Log(Commands);
         }
 
         //Register commands whether are valid or not
@@ -259,7 +267,6 @@ namespace Console
         //Handles Debug. message of Unity
         private void HandleLog(string logMessage, string stackTrace, LogType type)
         {
-            if()
             CreateBaseLog();
             AddMessageToConsole(logMessage, DeveloperConsoleUtils.LogTypeToMessageType(type));
         }
