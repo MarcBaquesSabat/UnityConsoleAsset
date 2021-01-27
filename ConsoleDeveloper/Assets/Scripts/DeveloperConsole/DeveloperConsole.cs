@@ -2,10 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Reflection;
-using System.Text.RegularExpressions;
-using Console;
 
 namespace BlackRefactory.Console
 {
@@ -142,15 +139,18 @@ namespace BlackRefactory.Console
         {
             return Commands.ContainsKey(command.ToLower());
         }
-
-        public void OpenDeveloperConsole()
+        
+        
+        //Private functions
+        
+        private void OpenDeveloperConsole()
         {
             consoleCanvas.SetActive(true);
             consoleState = ConsoleState.ACTIVE;
             consoleInput.ActivateInputField();
         }
 
-        public void CloseDeveloperConsole()
+        private void CloseDeveloperConsole()
         {
             consoleCanvas.SetActive(false);
             consoleState = ConsoleState.DISACTIVE;
@@ -158,19 +158,16 @@ namespace BlackRefactory.Console
                 consoleConfigurationCanvas.SetActive(false);
         }
 
-        public bool ConsoleIsActive()
+        private bool ConsoleIsActive()
         {
             return consoleState == ConsoleState.ACTIVE;
         }
 
-        public void ToggleConfigurationPanel()
+        private void ToggleConfigurationPanel()
         {
             consoleConfigurationCanvas.SetActive(!consoleConfigurationCanvas.activeInHierarchy);
         }
 
-        
-        //Private functions
-        
         private void InitializeSetup()
         {
             actualIndexCommandSelected = 0;
@@ -184,10 +181,7 @@ namespace BlackRefactory.Console
         }
 
         private void ProcessCommand( string[] _input)
-        {    
-            //Command doesnt exist on dictionary
-
-
+        {
             if (!DeveloperConsoleUtils.IsInputValid(_input) || !Commands.ContainsKey(_input[0]))
             {
                 AddMessageToConsole( DeveloperConsoleMessages.UnrecognizedCommandMessage, ConsoleLogTag.WARNING);
@@ -241,6 +235,7 @@ namespace BlackRefactory.Console
             }
             commandsHistoryList.Add(_command);
         }
+        
         private bool CanCommandHistoryMove(KeyCode keyCode)
         {
             return Input.GetKeyDown(keyCode) && commandsHistoryList.Count > 0 && consoleInput.isFocused;
@@ -291,15 +286,6 @@ namespace BlackRefactory.Console
             CreateBaseLog();
             AddMessageToConsole(logMessage, DeveloperConsoleUtils.LogTypeToMessageType(type));
         }
-
-        //Getters and setters
-        public TMPro.TextMeshProUGUI getInputText()
-        {
-            return consoleText;
-        }
-        public TMPro.TMP_InputField getInputField()
-        {
-            return consoleInput;
-        }
+        
     }
 }

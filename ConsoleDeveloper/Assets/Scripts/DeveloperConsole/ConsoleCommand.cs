@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace BlackRefactory.Console
+﻿namespace BlackRefactory.Console
 {
     public abstract class ConsoleCommand
     {
