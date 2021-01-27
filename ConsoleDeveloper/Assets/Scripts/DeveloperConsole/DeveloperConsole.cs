@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
+using UnityEngine.UI;
 
 namespace BlackRefactory.Console
 {
@@ -173,6 +174,8 @@ namespace BlackRefactory.Console
             actualIndexCommandSelected = 0;
             consoleText.text += "\n";
             consoleCanvas.SetActive(false);
+            
+            HandleInputTextChange();
 
             if (!DeveloperConsoleUtils.IsEventSystemOnScene())
             {
@@ -287,5 +290,15 @@ namespace BlackRefactory.Console
             AddMessageToConsole(logMessage, DeveloperConsoleUtils.LogTypeToMessageType(type));
         }
         
+        //Handle the change on input text
+        private void HandleInputTextChange()
+        {
+            consoleInput.onValueChanged.AddListener(UpdateAutoComplete);
+        }
+
+        private void UpdateAutoComplete(string inputString)
+        {
+            
+        }
     }
 }
