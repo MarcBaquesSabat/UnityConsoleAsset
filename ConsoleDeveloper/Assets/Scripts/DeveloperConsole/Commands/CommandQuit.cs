@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Console
+namespace BlackRefactory.Console
 {
     public class CommandQuit : ConsoleCommand
     {

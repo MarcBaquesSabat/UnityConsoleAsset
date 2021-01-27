@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Console
+namespace BlackRefactory.Console
 {
     public enum ConsoleLogTag { LOG, WARNING, ERROR, NONE, MAX};
 

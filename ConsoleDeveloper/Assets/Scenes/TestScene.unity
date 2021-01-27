@@ -303,6 +303,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4634513808119772458, guid: 74047ac8916f2ec4398471d84dd4e097,
+        type: 3}
+      propertyPath: showDebugLogsConsole
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74047ac8916f2ec4398471d84dd4e097, type: 3}
 --- !u!1 &2040547241

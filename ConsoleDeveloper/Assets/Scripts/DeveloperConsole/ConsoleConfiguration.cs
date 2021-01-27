@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewConsoleConfiguration", menuName = ("Developer Console/Console Configuration"))]
-public class ConsoleConfiguration : ScriptableObject
+namespace BlackRefactory.Console
 {
-    //public Color backgroundColor;
-    //public Color fontColor;
-    //public Font consoleFont;
+    [CreateAssetMenu(fileName = "NewConsoleConfiguration", menuName = ("Developer Console/Console Configuration"))]
+    public class ConsoleConfiguration : ScriptableObject
+    {
+        //public Color backgroundColor;
+        //public Color fontColor;
+        //public Font consoleFont;
 
-    public bool showUnityLogsOnConsole = true;
-    public bool showCommandsCreationMessage = false;
-    public bool showStackErrorLogs = false;
+        public bool showUnityLogsOnConsole = true;
+        public bool showCommandsCreationMessage = false;
+        public bool showStackErrorLogs = false;
+    }
 }
+

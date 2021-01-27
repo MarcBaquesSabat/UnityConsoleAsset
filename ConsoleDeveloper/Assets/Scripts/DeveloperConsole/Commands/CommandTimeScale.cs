@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using UnityEngine;
 
-namespace Console
+namespace BlackRefactory.Console
 {
     public class CommandTimeScale : ConsoleCommand
     {

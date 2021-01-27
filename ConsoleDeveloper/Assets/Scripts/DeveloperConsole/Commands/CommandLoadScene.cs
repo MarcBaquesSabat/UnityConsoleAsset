@@ -1,8 +1,7 @@
-﻿
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 
-namespace Console
+namespace BlackRefactory.Console
 {
     public class CommandLoadScene : ConsoleCommand
     {

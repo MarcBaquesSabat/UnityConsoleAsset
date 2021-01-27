@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Console;
 
-namespace Console
+namespace BlackRefactory.Console
 {
     public enum ConsoleState { ACTIVE, DISACTIVE};
 
@@ -77,18 +78,10 @@ namespace Console
 
         private void Start()
         {
-            actualIndexCommandSelected = 0;
-            consoleText.text += "\n";
-            consoleCanvas.SetActive(false);
-
-            if (!DeveloperConsoleUtils.IsEventSystemOnScene())
-            {
-                DeveloperConsoleUtils.CreateEventSystem(this.transform);
-            }
-
+            InitializeSetup();
             CreateCommands();
         }
-
+        
         private void Update()
         {
             //Activation and desactivation
@@ -99,8 +92,7 @@ namespace Console
                 else
                     OpenDeveloperConsole();
             }
-
-            //Console active
+            
             if (ConsoleIsActive())
             {
                 if (Input.GetKeyDown(enterKey))
@@ -109,33 +101,22 @@ namespace Console
                     
                     if (commandString != "")
                     {
-                        commandString = DeveloperConsoleUtils.CleanStringZeroWhidthSpace(commandString);
                         CreateBaseLog(commandString);
                         
                         RegisterCommandOnCommandsHistoryList(commandString);
                         ProcessCommand(ParseInput(commandString));
 
-                        ResetConsole();
+                        ResetConsoleAfterProcess();
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.DownArrow) && commandsHistoryList.Count > 0 && consoleInput.isFocused)
+                if (CanCommandHistoryMove(KeyCode.DownArrow))
                 {
-                    consoleInput.text = commandsHistoryList[actualIndexCommandSelected];
-
-                    if (actualIndexCommandSelected < commandsHistoryList.Count - 1)
-                    {
-                        actualIndexCommandSelected++;
-                    }
+                    NextHistoryCommand();
                 }
-                if (Input.GetKeyDown(KeyCode.UpArrow) && commandsHistoryList.Count > 0 && consoleInput.isFocused)
+                if (CanCommandHistoryMove(KeyCode.UpArrow))
                 {
-                    consoleInput.text = commandsHistoryList[actualIndexCommandSelected];
-
-                    if (actualIndexCommandSelected > 0)
-                    {
-                        actualIndexCommandSelected--;
-                    }
+                    PreviousHistoryCommand();
                 }
 
             }
@@ -157,7 +138,7 @@ namespace Console
             }
         }
 
-        public static bool isValidCommand(string command)
+        public static bool IsValidCommand(string command)
         {
             return Commands.ContainsKey(command.ToLower());
         }
@@ -187,6 +168,20 @@ namespace Console
             consoleConfigurationCanvas.SetActive(!consoleConfigurationCanvas.activeInHierarchy);
         }
 
+        
+        //Private functions
+        
+        private void InitializeSetup()
+        {
+            actualIndexCommandSelected = 0;
+            consoleText.text += "\n";
+            consoleCanvas.SetActive(false);
+
+            if (!DeveloperConsoleUtils.IsEventSystemOnScene())
+            {
+                DeveloperConsoleUtils.CreateEventSystem(this.transform);
+            }
+        }
 
         private void ProcessCommand( string[] _input)
         {    
@@ -214,7 +209,7 @@ namespace Console
             return _input;
         }
 
-        //Modify this function adding all your own created commands
+        //Add all commands to the console
         private void CreateCommands()    
         {
             var allCommandsTypes = Assembly.GetAssembly(typeof(ConsoleCommand)).GetTypes().Where(t => typeof(ConsoleCommand).IsAssignableFrom(t) && t.IsAbstract == false);
@@ -246,13 +241,31 @@ namespace Console
             }
             commandsHistoryList.Add(_command);
         }
-
-        private void ResetConsole()
+        private bool CanCommandHistoryMove(KeyCode keyCode)
         {
-            consoleInput.ActivateInputField();
-            actualIndexCommandSelected = commandsHistoryList.Count - 1;
+            return Input.GetKeyDown(keyCode) && commandsHistoryList.Count > 0 && consoleInput.isFocused;
+        } 
+
+        private void PreviousHistoryCommand()
+        {
+            consoleInput.text = commandsHistoryList[actualIndexCommandSelected];
+
+            if (actualIndexCommandSelected > 0)
+            {
+                actualIndexCommandSelected--;
+            }
         }
 
+        private void NextHistoryCommand()
+        {
+            consoleInput.text = commandsHistoryList[actualIndexCommandSelected];
+
+            if (actualIndexCommandSelected < commandsHistoryList.Count - 1)
+            {
+                actualIndexCommandSelected++;
+            }
+        }
+        
         private void CreateBaseLog(string command)
         {
             GameObject go = Instantiate(logPrefab, newLogParent);
@@ -264,6 +277,12 @@ namespace Console
         {
             GameObject go = Instantiate(logPrefab, newLogParent);
             consoleLogList.Add(go);
+        }
+        
+        private void ResetConsoleAfterProcess()
+        {
+            consoleInput.ActivateInputField();
+            actualIndexCommandSelected = commandsHistoryList.Count - 1;
         }
 
         //Handles Debug. message of Unity

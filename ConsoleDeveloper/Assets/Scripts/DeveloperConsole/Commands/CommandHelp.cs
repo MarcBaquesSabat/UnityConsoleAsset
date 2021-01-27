@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Console
+﻿namespace BlackRefactory.Console
 {
     public class CommandHelp : ConsoleCommand
     {
@@ -39,7 +35,7 @@ namespace Console
                 return;
             }
             
-            if(DeveloperConsole.isValidCommand(args[0])){
+            if(DeveloperConsole.IsValidCommand(args[0])){
                 DeveloperConsole.Instance.AddMessageToConsole(DeveloperConsole.Commands[args[0]].Help, ConsoleLogTag.LOG);
             }
             else

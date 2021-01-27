@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
-namespace Console
+namespace BlackRefactory.Console
 {
     public class CommandClearConsole : ConsoleCommand
     {
