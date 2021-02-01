@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
-using UnityEngine.UI;
 
 namespace BlackRefactory.Console
 {
@@ -28,6 +27,8 @@ namespace BlackRefactory.Console
         TMPro.TMP_InputField consoleInput = null;
 
         [Header("Internal Configuration")] 
+        [SerializeField]
+        private ConsoleAutoComplete autoComplete = null;
         [SerializeField]
         private KeyCode openKey = KeyCode.Tab;
         [SerializeField]
@@ -298,7 +299,29 @@ namespace BlackRefactory.Console
 
         private void UpdateAutoComplete(string inputString)
         {
+            if (string.IsNullOrEmpty(inputString))
+            {
+                autoComplete.CleanPreviews();
+                return;
+            }
             
+            var foundedCommands = SearchCommands(inputString);
+
+            autoComplete.ShowAutoCompleteCommands(foundedCommands);
+        }
+
+        private List<string> SearchCommands(string inputString)
+        {
+            List<string> foundedCommands = new List<string>();
+            foreach (var key in Commands.Keys)
+            {
+                if (key.Contains(inputString.ToLower()))
+                {
+                    foundedCommands.Add(key);
+                }
+            }
+
+            return foundedCommands;
         }
     }
 }
