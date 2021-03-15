@@ -203,18 +203,64 @@ namespace BlackRefactory.Console
             return _input;
         }
 
+        private List<MemberInfo> attributes = new List<MemberInfo>();
         //Add all commands to the console
-        private void CreateCommands()    
+        private void CreateCommands()
         {
-            var allCommandsTypes = Assembly.GetAssembly(typeof(ConsoleCommand)).GetTypes().Where(t => typeof(ConsoleCommand).IsAssignableFrom(t) && t.IsAbstract == false);
-
-            foreach (var commandType in allCommandsTypes)
+            
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (Assembly assembly in assemblies)
             {
-                ConsoleCommand command = Activator.CreateInstance(commandType) as ConsoleCommand;
-                AddCommandToConsole(command);
-                
-                Debug.Log($"Command: {command.Name} has been added.");
+                Type[] types = assembly.GetTypes();
+
+                foreach (Type type in types)
+                {
+                    MemberInfo[] members = type.GetMembers((BindingFlags)60);
+                    
+                    foreach (var member in members)
+                    {
+                        if (member.CustomAttributes.ToArray().Length > 0)
+                        {
+                            CommandAttribute attribute = member.GetCustomAttribute<CommandAttribute>();
+                            if (attribute != null)
+                            {
+                                if ((member.MemberType & MemberTypes.Method) != 0)
+                                {
+                                    Debug.Log("Method: " + member.Name);
+                                    
+                                    // ConstructorInfo magicConstructor = type.GetConstructor(Type.EmptyTypes);
+                                    // Activator.CreateInstance()
+                                    // object magicClassObject = magicConstructor.Invoke(new object[]{});
+                                    //
+                                    // MethodInfo magicMethod = type.GetMethod(member.Name);
+                                    // object magicValue = magicMethod.Invoke(magicClassObject, new object[]{100});
+                                }
+                                if ((member.MemberType & MemberTypes.Field) != 0)
+                                {
+                                    Debug.Log("Field: " + member.Name);
+                                }
+                                if ((member.MemberType & MemberTypes.Property) != 0)
+                                {
+                                    Debug.Log("Property: " + member.Name);
+                                }
+                                attributes.Add(member);
+                                
+                            }
+                        }
+                    }
+                }
             }
+            
+            
+            // var allCommandsTypes = Assembly.GetAssembly(typeof(ConsoleCommand)).GetTypes().Where(t => typeof(ConsoleCommand).IsAssignableFrom(t) && t.IsAbstract == false);
+            //
+            // foreach (var commandType in allCommandsTypes)
+            // {
+            //     ConsoleCommand command = Activator.CreateInstance(commandType) as ConsoleCommand;
+            //     AddCommandToConsole(command);
+            //     
+            //     Debug.Log($"Command: {command.Name} has been added.");
+            // }
         }
         
         //Add the command to the dictionary from the consoleCommand
